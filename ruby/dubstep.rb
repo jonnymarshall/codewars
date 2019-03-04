@@ -22,8 +22,8 @@ def song_decoder(song, count = 0, original_song = [])
       count += 1
     end
   end
-  byebug
-  original_song.delete(0) if original_song[0] == " "
-  original_song.delete(-1) if original_song[-1] == " "
-  p original_song.join
+  # byebug
+  p original_song.join.strip
 end
+
+song_decoder("WUBAWUBBWUBCWUB")
