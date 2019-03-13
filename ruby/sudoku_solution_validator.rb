@@ -1,0 +1,75 @@
+require 'byebug'
+
+def validSolution(board, set = (1..9).to_a, squares = [], count = 0, vert_count = 0)
+  a, b, c, d, e, f, g, h, i = Array.new(9) {[]}
+  vertical_lines = []
+  vertical_lines += [a, b, c, d, e, f, g, h, i]
+
+  board.each do |line|
+    count += 1 if line.sort == set
+    line.each do |number|
+      vertical_lines[vert_count] << number
+    end
+    vert_count += 1
+  end
+
+  vert_line_count = 0
+  vertical_lines.each do |vertical_line|
+    count += 1 if vertical_line.sort == set
+    vert_line_count += 1
+  end
+
+  squares << board[0][0..2] + board[1][0..2] + board[2][0..2]
+  squares << board[0][3..5] + board[1][3..5] + board[2][3..5]
+  squares << board[0][6..8] + board[1][6..8] + board[2][6..8]
+
+  squares << board[3][0..2] + board[4][0..2] + board[5][0..2]
+  squares << board[3][3..5] + board[4][3..5] + board[5][3..5]
+  squares << board[3][6..8] + board[4][6..8] + board[5][6..8]
+
+  squares << board[6][0..2] + board[7][0..2] + board[8][0..2]
+  squares << board[6][3..5] + board[7][3..5] + board[8][3..5]
+  squares << board[6][6..8] + board[7][6..8] + board[8][6..8]
+
+  squares.each do |square|
+    count += 1 if square.sort == set
+  end
+  count == 27
+end
+
+def vertical_arrays(line)
+  position = 0
+  line.each do |position|
+    a << line[0]
+    b << line[1]
+    c << line[2]
+    d << line[3]
+    e << line[4]
+    f << line[5]
+    g << line[6]
+    h << line[7]
+    i << line[8]
+  end
+end
+
+p validSolution([[5, 3, 4, 6, 7, 8, 9, 1, 2],
+                         [6, 7, 2, 1, 9, 5, 3, 4, 8],
+                         [1, 9, 8, 3, 4, 2, 5, 6, 7],
+                         [8, 5, 9, 7, 6, 1, 4, 2, 3],
+                         [4, 2, 6, 8, 5, 3, 7, 9, 1],
+                         [7, 1, 3, 9, 2, 4, 8, 5, 6],
+                         [9, 6, 1, 5, 3, 7, 2, 8, 4],
+                         [2, 8, 7, 4, 1, 9, 6, 3, 5],
+                         [3, 4, 5, 2, 8, 6, 1, 7, 9]])
+# true
+
+p validSolution([[5, 3, 4, 6, 7, 8, 9, 1, 2],
+                         [6, 7, 2, 1, 9, 0, 3, 4, 9],
+                         [1, 0, 0, 3, 4, 2, 5, 6, 0],
+                         [8, 5, 9, 7, 6, 1, 0, 2, 0],
+                         [4, 2, 6, 8, 5, 3, 7, 9, 1],
+                         [7, 1, 3, 9, 2, 4, 8, 5, 6],
+                         [9, 0, 1, 5, 3, 7, 2, 1, 4],
+                         [2, 8, 7, 4, 1, 9, 6, 3, 5],
+                         [3, 0, 0, 4, 8, 1, 1, 7, 9]])
+# false
