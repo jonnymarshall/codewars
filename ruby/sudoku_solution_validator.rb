@@ -1,17 +1,10 @@
 require 'byebug'
 
-def validSolution(board, set = (1..9).to_a, squares = [], count = 0, vert_count = 0)
+def validSolution(board, set = (1..9).to_a, squares = [], vertical_lines = [])
   a, b, c, d, e, f, g, h, i = Array.new(9) {[]}
-  vertical_lines = []
   vertical_lines += [a, b, c, d, e, f, g, h, i]
 
-  board.each do |line|
-    count += 1 if line.sort == set
-    line.each do |number|
-      vertical_lines[vert_count] << number
-    end
-    vert_count += 1
-  end
+  count = square_checker(board, count, vertical_lines, set)
 
   vert_line_count = 0
   vertical_lines.each do |vertical_line|
@@ -37,19 +30,18 @@ def validSolution(board, set = (1..9).to_a, squares = [], count = 0, vert_count 
   count == 27
 end
 
-def vertical_arrays(line)
-  position = 0
-  line.each do |position|
-    a << line[0]
-    b << line[1]
-    c << line[2]
-    d << line[3]
-    e << line[4]
-    f << line[5]
-    g << line[6]
-    h << line[7]
-    i << line[8]
+def square_checker(board, count, vertical_lines, set, vert_count = 0, counter = 0)
+  board.each do |line|
+    # Check if each line is a set
+    counter += 1 if line.sort == set
+
+    # Arrange each number in a line into correct vertical
+    line.each do |number|
+      vertical_lines[vert_count] << number
+    end
+    vert_count += 1
   end
+  counter
 end
 
 p validSolution([[5, 3, 4, 6, 7, 8, 9, 1, 2],
