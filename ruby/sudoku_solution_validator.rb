@@ -1,8 +1,9 @@
 require 'byebug'
 
 def validSolution(board, set = (1..9).to_a, squares = [], vertical_lines = [])
-  a, b, c, d, e, f, g, h, i = Array.new(9) {[]}
-  vertical_lines += [a, b, c, d, e, f, g, h, i]
+  # a, b, c, d, e, f, g, h, i = Array.new(9) {[]}
+  # vertical_lines += [a, b, c, d, e, f, g, h, i]
+  vertical_lines = Array.new(9, []) {[]}
 
   count = square_checker(board, count, vertical_lines, set)
 
@@ -37,9 +38,11 @@ def square_checker(board, count, vertical_lines, set, vert_count = 0, counter = 
 
     # Arrange each number in a line into correct vertical
     line.each do |number|
+      # byebug
       vertical_lines[vert_count] << number
+      vert_count += 1
     end
-    vert_count += 1
+    vert_count = 0
   end
   counter
 end
@@ -64,4 +67,4 @@ p validSolution([[5, 3, 4, 6, 7, 8, 9, 1, 2],
                          [9, 0, 1, 5, 3, 7, 2, 1, 4],
                          [2, 8, 7, 4, 1, 9, 6, 3, 5],
                          [3, 0, 0, 4, 8, 1, 1, 7, 9]])
-# false
+false
