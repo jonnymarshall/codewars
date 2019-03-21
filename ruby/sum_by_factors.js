@@ -1,6 +1,8 @@
 function sumOfDivided(lst) {
   //your code
   return [[2, 12]];
+  let primeSumArray = [];
+  return primeSumArray
 }
 
 sumOfDivided([12, 15])
