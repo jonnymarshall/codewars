@@ -1,13 +1,10 @@
-require 'rspec'
-
-
-
 def generateHashtag(str)
   "##{str.capitalize}"
   # All words must have their first letter capitalized.
   # If the final result is longer than 140 chars it must return false.
   # If the input or the result is an empty string it must return false.
 end
+
 
 Test.assert_equals(generateHashtag(""), false, "Expected an empty string to return false")
 Test.assert_equals(generateHashtag(" " * 200), false, "Still an empty string")
