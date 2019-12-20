@@ -1,8 +1,19 @@
 class HashtagGenerator
-  def generateHashtag(str)
-    "##{str.capitalize}"
-    # All words must have their first letter capitalized.
-    # If the final result is longer than 140 chars it must return false.
-    # If the input or the result is an empty string it must return false.
+  def generateHashtag(str, hashtag = [])
+    if str.gsub(/\s+/, "") == "" || str.gsub(/\s+/, "").length > 139
+      false
+    else
+      str.split(/ /).each do |word|
+        hashtag << word.capitalize
+      end
+      "##{hashtag.join.gsub(/\s+/, "")}"
+    end
   end
 end
+
+
+# BEST ANSWER
+# def generateHashtag(str)
+#   str = "#" << str.split.map(&:capitalize).join
+#   str.size <= 140 && str.size > 1 ? str : false
+# end
