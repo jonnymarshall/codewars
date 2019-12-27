@@ -13,7 +13,14 @@ def is_solved(board, tracker = {xrow: 0, orow: 0, xcol: 0, ocol: 0, ccount: 0, r
     # byebug
     tracker[:xcol] += 1 if col[0] == 1 && + col[1] == 1 && + col[2] == 1
     tracker[:ocol] += 1 if col[0] == 1 && + col[1] == 1 && + col[2] == 1
+
+    # col.each do |slot|
+    #   columns[tracker[:rcount]][tracker[:ccount]] = slot
+    #   tracker[:rcount] += 1
+    # end
   end
+
+
 
   p tracker
 
