@@ -1,9 +1,10 @@
 require 'byebug'
 
-def is_solved(board, tracker = {xrow: 0, orow: 0, xcol: 0, ocol: 0, ccount: 0, rcount: 0}, columns = Array.new(3){Array.new(3)})
+def is_solved(board, tracker = {xwin: false, owin: false, ccount: 0, rcount: 0, spaces_left: false}, columns = Array.new(3){Array.new(3)})
   board.each do |row|
-    tracker[:xrow] += 1 if row[0] == 1 && row[1] == 1 && row[2] == 1
-    tracker[:orow] += 1 if row[0] == 2 && row[1] == 2 && row[2] == 2
+    tracker[:xwin] = true if row[0] == 1 && row[1] == 1 && row[2] == 1
+    tracker[:owin] = true if row[0] == 2 && row[1] == 2 && row[2] == 2
+    tracker[:spaces_left] = true if row[0] == 0 || row[1] == 0 || row[2] == 0
     create_columns(tracker, row, columns)
     tracker[:rcount] = 0
     tracker[:ccount] += 1
@@ -11,25 +12,20 @@ def is_solved(board, tracker = {xrow: 0, orow: 0, xcol: 0, ocol: 0, ccount: 0, r
 
   columns.each do |col|
     # byebug
-    tracker[:xcol] += 1 if col[0] == 1 && + col[1] == 1 && + col[2] == 1
-    tracker[:ocol] += 1 if col[0] == 1 && + col[1] == 1 && + col[2] == 1
-
-    # col.each do |slot|
-    #   columns[tracker[:rcount]][tracker[:ccount]] = slot
-    #   tracker[:rcount] += 1
-    # end
+    tracker[:xwin] = true if col[0] == 1 && + col[1] == 1 && + col[2] == 1
+    tracker[:owin] = true if col[0] == 1 && + col[1] == 1 && + col[2] == 1
   end
 
-
+  diag_checker(columns, board, tracker)
 
   p tracker
 
-  if tracker[:xrow] + tracker[:orow] <= 1
-    return -1
-  elsif (tracker[:xrow] + tracker[:xcol]) > (tracker[:orow] + tracker[:ocol])
+  if tracker[:xwin]
     return 1
-  elsif (tracker[:xrow] + tracker[:xcol]) < (tracker[:orow] + tracker[:ocol])
+  elsif tracker[:owin]
     return 2
+  elsif tracker[:xwin] == false && tracker[:owin] == false && tracker[:spaces_left] == true
+    return -1
   else
     return 0
   end
@@ -41,6 +37,12 @@ def create_columns(tracker, row, columns)
     tracker[:rcount] += 1
   end
 end
+
+def diag_checker(columns, board, tracker)
+  tracker[:xwin] = true if (columns[0][0] == 1 && board[0][0] == 1) && (columns[1][1] == 1 && board[1][1] == 1) && (columns[2][2] == 1 && board[2][2] == 1)
+  tracker[:owin] = true if (columns[0][0] == 2 && board[0][0] == 2) && (columns[1][1] == 2 && board[1][1] == 2) && (columns[2][2] == 2 && board[2][2] == 2)
+end
+
 
 p is_solved([[0,0,1],[0,1,2],[2,1,0]])
 # -1
